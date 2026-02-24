@@ -25,7 +25,6 @@ Check out the [`nkzw-tech/server-template`](https://github.com/nkzw-tech/server-
 
 - Press the "Use this template" button on the top of this repository's GitHub page.
 - Run `pnpm install` (or `npm install` if you don't use `pnpm`).
-- Run `pnpm dev:setup`.
 - `pnpm dev` for development.
 - Use `pnpm test` to run tests.
 - `pnpm build` for production builds.
