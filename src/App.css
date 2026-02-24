@@ -1,10 +1,15 @@
+/* Declare Panda CSS cascade layers in priority order.
+   Panda injects its generated styles into these layers at build time.
+   Do not reorder — utilities must override recipes, which override tokens, etc. */
 @layer reset, base, tokens, recipes, utilities;
 
+/* Light mode CSS custom properties used by the body below */
 :root {
   --background-color: #fff;
   --text-color: #111;
 }
 
+/* Dark mode overrides — Panda CSS _dark: {} conditions also respect this via the data-theme attribute */
 @media (prefers-color-scheme: dark) {
   :root {
     --background-color: rgb(20, 20, 20);

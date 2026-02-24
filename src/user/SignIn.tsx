@@ -3,6 +3,7 @@ import { css } from '../../styled-system/css';
 import { flex } from '../../styled-system/patterns';
 import AuthClient from './AuthClient.tsx';
 
+// Panda CSS class for form inputs — shared between text inputs and the submit button
 const inputClass = css({
   _dark: { borderColor: 'pink.400', color: 'pink.400' },
   border: '1px solid',
@@ -25,10 +26,13 @@ const codeClass = css({
   paddingY: '1',
 });
 
+// Sign-in form using SolidJS createSignal for controlled inputs and Better Auth for authentication
 export default function SignIn() {
+  // Controlled input signals — in SolidJS, read with email(), write with setEmail(value)
   const [email, setEmail] = createSignal('');
   const [password, setPassword] = createSignal('');
 
+  // Submit handler — calls Better Auth email/password sign-in
   const signIn = async (event: SubmitEvent) => {
     event.preventDefault();
 

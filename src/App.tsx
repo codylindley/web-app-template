@@ -5,6 +5,7 @@ import { flex } from '../styled-system/patterns';
 import AuthClient from './user/AuthClient.tsx';
 import SignIn from './user/SignIn.tsx';
 
+// Panda CSS css() returns a static class string — safe to define at module scope outside components
 const linkClass = css({
   _dark: { color: 'pink.400' },
   _hover: { textDecoration: 'none' },
@@ -12,6 +13,7 @@ const linkClass = css({
   textDecoration: 'underline',
 });
 
+// Thin wrapper around @solidjs/router's <A> component with consistent link styling
 const Link = (props: { children: unknown; class?: string; href: string; target?: string }) => (
   <A
     class={`${linkClass}${props.class ? ` ${props.class}` : ''}`}
@@ -34,6 +36,7 @@ const codeClass = css({
   paddingY: '1',
 });
 
+// Card layout class — includes dark mode variant via the _dark condition
 const cardClass = css({
   _dark: {
     bg: 'neutral.800',
@@ -50,6 +53,7 @@ const cardClass = css({
   width: '2/3',
 });
 
+// Home route — session is a SolidJS signal accessor; call session() to read the current value
 const Home = () => {
   const session = AuthClient.useSession();
 
@@ -115,6 +119,7 @@ const Home = () => {
   );
 };
 
+// About route — simple static page
 const About = () => (
   <div
     class={css({
@@ -141,6 +146,7 @@ const About = () => (
   </div>
 );
 
+// Root component — sets up client-side routing with @solidjs/router
 export default function App() {
   return (
     <Router>
