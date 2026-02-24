@@ -22,10 +22,10 @@ Check out the [`nkzw-tech/server-template`](https://github.com/nkzw-tech/server-
 
 - Press the "Use this template" button on the top of this repository's GitHub page.
 - Run `pnpm install` (or `npm install` if you don't use `pnpm`). This automatically runs `panda codegen` via the `prepare` script, generating the `styled-system/` directory.
-- Run `pnpm dev:setup`.
 - `pnpm dev` for development.
 - Use `pnpm test` to run tests.
 - `pnpm build` for production builds.
+- Run `pnpm panda:codegen` manually to regenerate styles after editing `panda.config.ts`.
 
 _Note: You can install `pnpm` via `homebrew` on macOS: `brew install pnpm`._
 
