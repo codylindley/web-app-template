@@ -11,7 +11,7 @@ _Minimal, sensible defaults, fast._
 - <a href="https://www.solidjs.com/">SolidJS</a>
 - <a href="https://panda-css.com/">Panda CSS</a> for styling
 - <a href="https://github.com/nkzw-tech/fbtee">fbtee</a> for i18n
-- <a href="https://www.better-auth.com/">Better Auth</a> for authentication
+- <a href="https://www.better-auth.com/">Better Auth</a> for authentication (SolidJS integration)
 - <a href="https://github.com/solidjs/solid-router">@solidjs/router</a> for routing
 - <a href="https://www.typescriptlang.org">TypeScript</a>
 - <a href="https://pnpm.io/">pnpm</a>
@@ -29,24 +29,22 @@ Check out the [`nkzw-tech/server-template`](https://github.com/nkzw-tech/server-
 
 _Note: You can install `pnpm` via `homebrew` on macOS: `brew install pnpm`._
 
+_Note: To manually regenerate the Panda CSS output, run `pnpm panda:codegen`._
+
 ## Panda CSS
 
-Styles are written using the `css()` utility and pattern helpers (e.g., `flex()`) imported from the generated `styled-system/css` and `styled-system/patterns` directories.
+Styles are defined using the `css()` utility and pattern helpers (e.g., `flex()`) imported from `../styled-system/css` and `../styled-system/patterns`.
 
-- The `styled-system/` directory is auto-generated — do not edit manually. Run `pnpm panda:codegen` to regenerate.
-- Panda config lives in `panda.config.ts` (`jsxFramework: 'solid'`, `outdir: 'styled-system'`).
-- Global CSS cascade layers are declared in `src/App.css`: `@layer reset, base, tokens, recipes, utilities`.
-- Customize the design system via `theme.extend` in `panda.config.ts`.
+- The `styled-system/` directory is **auto-generated** — do not edit it manually. Run `pnpm panda:codegen` to regenerate it.
+- The Panda config lives in `panda.config.ts` with `jsxFramework: 'solid'`.
+- Global CSS cascade layers are declared in `src/App.css`.
 
-## SolidJS
+## SolidJS Notes (coming from React)
 
-For developers coming from React:
-
-- No Virtual DOM — reactivity is fine-grained via signals.
+- SolidJS does **not** use a Virtual DOM — reactivity is fine-grained and based on signals.
 - Use `createSignal`, `createMemo`, `createEffect` instead of `useState`, `useMemo`, `useEffect`.
-- Use `<Show>` for conditional rendering and `<For>` for list rendering.
-- No React Compiler needed.
-- JSX uses `class` instead of `className`.
+- Use `<Show>` for conditional rendering and `<For>` for list rendering instead of ternaries and `.map()`.
+- There is **no React Compiler** — SolidJS does not need one.
 
 ## Protips for the fastest Developer Experience
 
