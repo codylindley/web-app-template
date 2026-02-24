@@ -1,4 +1,4 @@
-import { createAuthClient } from 'better-auth/react';
+import { createAuthClient } from 'better-auth/solid';
 import env from '../lib/env.tsx';
 
 export default createAuthClient({

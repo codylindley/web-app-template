@@ -1,17 +1,9 @@
-import fbteePreset from '@nkzw/babel-preset-fbtee';
-import tailwindcss from '@tailwindcss/vite';
-import react from '@vitejs/plugin-react';
-import reactCompiler from 'babel-plugin-react-compiler';
-import { defineConfig } from 'vite';
+import solid from 'vite-plugin-solid';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-  plugins: [
-    tailwindcss(),
-    react({
-      babel: {
-        plugins: [reactCompiler],
-        presets: [fbteePreset],
-      },
-    }),
-  ],
+  plugins: [solid()],
+  test: {
+    environment: 'node',
+  },
 });
