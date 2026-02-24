@@ -5,5 +5,7 @@ coverage/
 dist/
 source_strings.json
 src/translations
+styled-system/
+styled-system-studio/
 tsconfig.tsbuildinfo
 vite.config.ts.timestamp-*

@@ -7,9 +7,6 @@
   "experimentalSortPackageJson": {
     "sortScripts": true,
   },
-  "experimentalTailwindcss": {
-    "stylesheet": "src/App.css",
-  },
   "ignorePatterns": [
     "coverage/",
     "dist/",
@@ -17,5 +14,6 @@
     "pnpm-lock.yaml",
     "src/__generated__/",
     "src/translations/",
+    "styled-system/",
   ],
 }

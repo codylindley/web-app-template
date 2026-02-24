@@ -6,10 +6,11 @@
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
     "isolatedModules": true,
-    "jsx": "react-jsx",
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "noEmit": true,
     "noImplicitOverride": true,
     "noUnusedLocals": true,
@@ -20,14 +21,5 @@
     "types": ["vite/client"]
   },
   "exclude": ["node_modules"],
-  "include": ["**/*.ts", "**/*.tsx"],
-  "ts-node": {
-    "transpileOnly": true,
-    "transpiler": "ts-node/transpilers/swc",
-    "files": true,
-    "compilerOptions": {
-      "module": "esnext",
-      "isolatedModules": false
-    }
-  }
+  "include": ["**/*.ts", "**/*.tsx"]
 }

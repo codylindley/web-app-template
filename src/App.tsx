@@ -1,140 +1,151 @@
-import Stack from '@nkzw/stack';
-import { useLocaleContext } from 'fbtee';
-import { AnchorHTMLAttributes, useTransition } from 'react';
-import { LinkProps, Link as ReactRouterLink, Route, Routes } from 'react-router';
-import AvailableLanguages from './AvailableLanguages.tsx';
+import { A, Route, Router } from '@solidjs/router';
+import { Show } from 'solid-js';
+import { css } from '../styled-system/css';
+import { flex } from '../styled-system/patterns';
 import AuthClient from './user/AuthClient.tsx';
 import SignIn from './user/SignIn.tsx';
 
-const Link = ({ className, ...props }: LinkProps & AnchorHTMLAttributes<HTMLAnchorElement>) => (
-  <ReactRouterLink
-    className={
-      'text-pink-700 underline hover:no-underline dark:text-pink-400' +
-      (className ? ` ${className}` : '')
-    }
-    {...props}
-  />
+const linkClass = css({
+  _dark: { color: 'pink.400' },
+  _hover: { textDecoration: 'none' },
+  color: 'pink.700',
+  textDecoration: 'underline',
+});
+
+const Link = (props: { children: unknown; class?: string; href: string; target?: string }) => (
+  <A
+    class={`${linkClass}${props.class ? ` ${props.class}` : ''}`}
+    href={props.href}
+    target={props.target}
+  >
+    {props.children as string}
+  </A>
 );
 
-const LocaleSwitcher = () => {
-  const [, startTransition] = useTransition();
-  const { locale, setLocale } = useLocaleContext();
+const codeClass = css({
+  _dark: { bg: 'neutral.700', borderColor: 'pink.400', color: 'pink.400' },
+  bg: 'neutral.100',
+  border: '1px solid',
+  borderColor: 'pink.700',
+  borderRadius: 'sm',
+  color: 'pink.700',
+  fontFamily: 'mono',
+  paddingX: '1',
+  paddingY: '1',
+});
 
-  return (
-    <div>
-      <a
-        className="cursor-pointer text-pink-700 underline select-none hover:no-underline dark:text-pink-400"
-        onClick={() => startTransition(() => setLocale(locale === 'ja_JP' ? 'en_US' : 'ja_JP'))}
-      >
-        {AvailableLanguages.get(locale)}
-      </a>
-    </div>
-  );
-};
+const cardClass = css({
+  _dark: {
+    bg: 'neutral.800',
+    borderColor: 'neutral.600',
+    shadow: 'none',
+  },
+  border: '1px solid',
+  borderColor: 'gray.200',
+  borderRadius: '2xl',
+  margin: '6',
+  marginX: 'auto',
+  padding: '4',
+  shadow: 'md',
+  width: '2/3',
+});
 
 const Home = () => {
-  const { data: session } = AuthClient.useSession();
+  const session = AuthClient.useSession();
 
   return (
-    <div className="m-6 mx-auto w-8/12 rounded-2xl border border-gray-200 p-4 shadow-md dark:border-neutral-600 dark:bg-neutral-800 dark:shadow-none">
-      <Stack alignCenter between gap>
-        <h1 className="text-4xl">
-          <fbt desc="Greeting">Welcome</fbt>
-        </h1>
-        <LocaleSwitcher />
-      </Stack>
-      <p className="my-4">
-        <em>
-          <fbt desc="Tagline">Minimal, fast, sensible defaults.</fbt>
-        </em>
+    <div class={cardClass}>
+      <div class={flex({ align: 'center', gap: '4', justify: 'space-between' })}>
+        <h1 class={css({ fontSize: '4xl' })}>Welcome</h1>
+      </div>
+      <p class={css({ marginY: '4' })}>
+        <em>Minimal, fast, sensible defaults.</em>
       </p>
-      <p className="my-4">
-        <fbt desc="Template tools">
-          Using{' '}
-          <fbt:list
-            items={[
-              <Link key="vite" target="_blank" to="https://vitejs.dev/">
-                Vite
-              </Link>,
-              <Link key="react" target="_blank" to="https://reactjs.org/">
-                React
-              </Link>,
-              <Link key="typescript" target="_blank" to="https://www.typescriptlang.org/">
-                TypeScript
-              </Link>,
-              <Link key="tailwind" target="_blank" to="https://tailwindcss.com/">
-                Tailwind
-              </Link>,
-              <Link key="fbtee" target="_blank" to="https://github.com/nkzw-tech/fbtee">
-                fbtee
-              </Link>,
-              <Link key="better-auth" target="_blank" to="https://www.better-auth.com/">
-                Better Auth
-              </Link>,
-            ]}
-            name="tools"
-          />
-          .
-        </fbt>
+      <p class={css({ marginY: '4' })}>
+        Using{' '}
+        <Link href="https://vitejs.dev/" target="_blank">
+          Vite
+        </Link>
+        ,{' '}
+        <Link href="https://www.solidjs.com/" target="_blank">
+          SolidJS
+        </Link>
+        ,{' '}
+        <Link href="https://www.typescriptlang.org/" target="_blank">
+          TypeScript
+        </Link>
+        ,{' '}
+        <Link href="https://panda-css.com/" target="_blank">
+          Panda CSS
+        </Link>
+        , and{' '}
+        <Link href="https://www.better-auth.com/" target="_blank">
+          Better Auth
+        </Link>
+        .
       </p>
-      <p className="my-4">
-        <fbt desc="Instructions">
-          Change{' '}
-          <code className="rounded-sm border border-pink-700 bg-neutral-100 px-1 py-1 font-mono text-pink-700 dark:border-pink-400 dark:bg-neutral-700 dark:text-pink-400">
-            src/App.tsx
-          </code>{' '}
-          for live updates.
-        </fbt>
+      <p class={css({ marginY: '4' })}>
+        Change <code class={codeClass}>src/App.tsx</code> for live updates.
       </p>
       <div>
-        {session ? (
-          <Stack gap={12} vertical>
-            <div>
-              <fbt desc="User greeting">
-                Hello, <fbt:param name="name">{session.user.name}</fbt:param>
-              </fbt>
+        <Show fallback={<SignIn />} when={session()?.data?.user}>
+          {(user) => (
+            <div class={flex({ direction: 'column', gap: '3' })}>
+              <div>Hello, {user().name}</div>
+              <div>
+                <a
+                  class={css({
+                    _dark: { color: 'pink.400' },
+                    color: 'pink.700',
+                    cursor: 'pointer',
+                  })}
+                  onClick={() => AuthClient.signOut()}
+                >
+                  Logout
+                </a>
+              </div>
             </div>
-            <div>
-              <a
-                className="text-pink-700 dark:border-pink-400"
-                onClick={() => AuthClient.signOut()}
-              >
-                <fbt desc="Logout button">Logout</fbt>
-              </a>
-            </div>
-          </Stack>
-        ) : (
-          <SignIn />
-        )}
+          )}
+        </Show>
       </div>
-      <p className="my-4">
-        <Link to="/about">
-          <fbt desc="About link">About this template</fbt>
-        </Link>
+      <p class={css({ marginY: '4' })}>
+        <Link href="/about">About this template</Link>
       </p>
     </div>
   );
 };
 
 const About = () => (
-  <div className="m-6 mx-auto w-8/12 rounded-sm border border-gray-200 p-4 shadow-md dark:border-neutral-600 dark:bg-neutral-800 dark:shadow-none">
-    <h1 className="text-4xl">
-      <fbt desc="About">About</fbt>
-    </h1>
-    <p className="my-4">🤘</p>
-    <p className="my-4">
-      <Link to="/">
-        <fbt desc="Back to home link">Home</fbt>
-      </Link>
+  <div
+    class={css({
+      _dark: {
+        bg: 'neutral.800',
+        borderColor: 'neutral.600',
+        shadow: 'none',
+      },
+      border: '1px solid',
+      borderColor: 'gray.200',
+      borderRadius: 'sm',
+      margin: '6',
+      marginX: 'auto',
+      padding: '4',
+      shadow: 'md',
+      width: '2/3',
+    })}
+  >
+    <h1 class={css({ fontSize: '4xl' })}>About</h1>
+    <p class={css({ marginY: '4' })}>🤘</p>
+    <p class={css({ marginY: '4' })}>
+      <Link href="/">Home</Link>
     </p>
   </div>
 );
 
 export default function App() {
   return (
-    <Routes>
-      <Route element={<Home />} path="/" />
-      <Route element={<About />} path="/about" />
-    </Routes>
+    <Router>
+      <Route component={Home} path="/" />
+      <Route component={About} path="/about" />
+    </Router>
   );
 }
